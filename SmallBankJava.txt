@@ -1,0 +1,188 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class BankApp {
+    public static void main(String[] args) {
+        Aq.m1();
+    }
+}
+class Aq{
+    static int temp1 = 0;
+    public static void m1() {
+        Bank.sbank();
+
+        if(temp1==3){
+            System.out.println("#############");
+        }
+    }
+
+}
+class Bank{
+
+    static int count;
+    static int validation=0;
+
+    public static void sbank() {
+        Scanner sc = new Scanner(System.in);
+
+        for(int i=0;i<3;i++) {
+             try {
+                 System.out.println("Enter the Account number:");
+                 int accnum = sc.nextInt();
+                 ;
+
+                 if (accnum != 123) {
+                     System.out.println("Check Account Number and enter the details from starting");
+                     count++;
+
+                     if (count == 3) {
+                         System.out.println("Too many attemps,visit after sometime");
+                         count = count - 3;
+                         return;
+
+                     }
+                     continue;
+                 }
+             }catch(InputMismatchException e){
+                  System.out.println("please check input data,so give details again");
+                 sbank();
+             }
+             try {
+                 System.out.println("Enter Username");
+                 String username = sc.next();
+
+                 if (!username.equalsIgnoreCase("dheeraz")) {
+                     System.out.println("Check Username and enter the details from starting");
+                     count++;
+                     if (count == 3) {
+                         System.out.println("Too many attemps,visit after sometime");
+                         count = count - 3;
+                         return;
+                     }
+                     continue;
+
+                 }
+             }catch(InputMismatchException e){
+                 System.out.println("please check input data,so give details again");
+                 sbank();
+             }
+             try {
+                 System.out.println("Enter Password");
+                 int password = sc.nextInt();
+
+                 if (password!=1231) {
+                     System.out.println("Check Check Password and enter the details from starting");
+                     count++;
+                     if (count == 3) {
+                         System.out.println("Too many attemps,visit after sometime");
+                         count = count - 3;
+                         return;
+                     }
+                 } else {
+                     break;
+                 }
+             }catch (InputMismatchException e){
+                  System.out.println("please check input data,so give details again");      
+                 sbank();
+             }
+
+
+
+        }
+        if(count!=3){
+        System.out.println("1.Deposit ");
+        System.out.println("2.Withdraw");
+        System.out.println("3.Balance ");
+        System.out.println("4.Exit");
+        System.out.print("Choose one option by entering corresponding number :");
+        int opt = sc.nextInt();
+
+
+        switch (opt) {
+
+            case 1:
+                System.out.print("Enter the Deposit Amount :");
+                try {
+                    int dep = sc.nextInt();
+                    Process.deposit(dep);
+                } catch (InputMismatchException w) {
+                    System.out.println("Float exception handled");
+                    sbank();
+                }
+                break;
+            case 2:
+                System.out.print("Enter the WithDraw Amount :");
+                int wd = sc.nextInt();
+                Process.withDraw(wd);
+                break;
+            case 3:
+                Process.balance();
+                break;
+            case 4:
+                Process.exit();
+                break;
+
+         }
+        }
+        else{
+            sbank();
+        }
+
+
+    }
+}
+class Process{
+
+    private static int amount;
+
+    public static void deposit(int deposit) {
+        amount = (amount + deposit);
+        System.out.println("The amount deposited is"+" : "+ deposit+" Rs");
+        System.out.println("Successfully deposited :");
+        System.out.print(amount+" Rs");
+        menu();
+    }
+
+    public static void withDraw(int withdraw){
+        amount=(amount-withdraw);
+        System.out.println("You took "+":"+withdraw+" Rs");
+        menu();
+
+    }
+
+    public static void balance(){
+        System.out.print("Your Balance is :");
+        getAmount();
+        menu();
+    }
+    public static void exit(){
+        System.out.println("Thank you");
+        System.out.println("Total Balance is :"+amount);
+        System.out.println("Take your ATM card after 5 seconds");
+
+    }
+    public static void getAmount(){
+        System.out.println(amount);
+    }
+
+    public static void menu(){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Do you want to continue the process ? :Yes/No");
+        System.out.println("For 'Yes' press Yes or y");
+        System.out.println("For 'No' press No or n ");
+        String c=sc.next();
+        if(c.equalsIgnoreCase("y")|| c.equalsIgnoreCase("yes")) Bank.sbank();
+
+        else if(c.equalsIgnoreCase("n")|| c.equalsIgnoreCase("no")) exit();
+
+        else {
+            System.out.println("Press the correct letter ");
+            menu();
+        }
+    }
+
+
+
+
+
+}
